@@ -1,0 +1,63 @@
+LAB ASSIGNMENT MENU DRIVEN PROGRAM
+mess macro msg                  ;define macro for printing messages
+mov ah,09h
+lea dx,msg
+int 21h
+endm
+
+.model small                    ;defines memory model
+
+.data                           ;Declare Data segment
+n1 db 0h
+n2 db 0h
+msg1 db 10,13,'Menu$'
+msg2 db 10,13,'1. Addition$'
+msg3 db 10,13,'2. Subtraction$'
+msg4 db 10,13,'3. Exit$'
+msg5 db 10,13,'Enter choice: $'
+msg8 db 10,13,'In Addition choice : $'
+msg9 db 10,13,'In Subtraction Choice :$'
+
+.code                           ;Declare Code segment
+mov ax,@data
+mov ds,ax
+
+mess msg1
+mess msg2
+mess msg3
+mess msg4
+mess msg5
+
+mov ah,01h                      ;Enter choice for the menu
+int 21h
+cmp al,31h                      
+jne ch1                         ;if not equal to 1, go to check if its second choice
+
+call addn                       ; if choice is 1, then add
+jmp e1                          ; after addition is done, exit
+
+
+ch1 : 
+        
+        cmp al,32h              ; choice 2
+        jne e1                  ; if not equal then exit
+        call subt               ; if choice =2, then subtract
+        jmp e1                  ; after subtraction is done, exit
+
+e1 : mov ah,4ch                 ;main program end here
+        int 21h
+
+
+addn proc near
+mess msg8                       ;Write your addition code here
+ret                                
+endp
+
+subt proc near
+mess msg9                       ;Write your subtraction code here
+ret                                
+endp
+
+
+
+end                             ;End of the program
